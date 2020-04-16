@@ -22,6 +22,7 @@ defmodule Estated.MixProject do
   defp deps do
     [
       {:certifi, "~> 2.5"},
+      {:dialyxir, "~> 1.0", only: :dev, runtime: false},
       {:ex_doc, "~> 0.21.3", only: :dev, runtime: false},
       {:jason, "~> 1.2"}
     ]
