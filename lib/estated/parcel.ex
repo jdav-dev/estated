@@ -242,6 +242,9 @@ defmodule Estated.Parcel do
   @typedoc since: "0.1.0"
   @type section_township_range :: String.t()
 
+  @doc false
+  @doc since: "0.1.0"
+  @spec cast(map()) :: t()
   def cast(%{} = parcel) do
     Enum.reduce(parcel, %__MODULE__{}, fn
       {"apn_original", apn_original}, acc ->
@@ -316,5 +319,10 @@ defmodule Estated.Parcel do
       _, acc ->
         acc
     end)
+  end
+
+  @spec cast(nil) :: nil
+  def cast(nil) do
+    nil
   end
 end

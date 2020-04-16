@@ -30,11 +30,19 @@ defmodule Estated.OtherArea do
   @typedoc since: "0.1.0"
   @type sq_ft :: integer()
 
-  def cast(other_areas) when is_list(other_areas) do
+  @doc false
+  @doc since: "0.1.0"
+  @spec cast_list([map()]) :: [t()]
+  def cast_list(other_areas) when is_list(other_areas) do
     Enum.map(other_areas, &cast/1)
   end
 
-  def cast(%{} = other_area) do
+  @spec cast_list(nil) :: []
+  def cast_list(nil) do
+    []
+  end
+
+  defp cast(%{} = other_area) do
     Enum.reduce(other_area, %__MODULE__{}, fn
       {"type", type}, acc -> %__MODULE__{acc | type: type}
       {"sq_ft", sq_ft}, acc -> %__MODULE__{acc | sq_ft: cast_integer(sq_ft)}
@@ -42,10 +50,10 @@ defmodule Estated.OtherArea do
     end)
   end
 
-  defp cast_integer(integer_string) when is_binary(integer_string) do
-    case Integer.parse(integer_string) do
+  defp cast_integer(binary) when is_binary(binary) do
+    case Integer.parse(binary) do
       {integer, _remainder_of_binary} -> integer
-      :error -> integer_string
+      :error -> binary
     end
   end
 

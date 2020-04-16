@@ -49,11 +49,19 @@ defmodule Estated.Tax do
   @typedoc since: "0.1.0"
   @type rate_code_area :: String.t()
 
-  def cast(taxes) when is_list(taxes) do
+  @doc false
+  @doc since: "0.1.0"
+  @spec cast_list([map()]) :: [t()]
+  def cast_list(taxes) when is_list(taxes) do
     Enum.map(taxes, &cast/1)
   end
 
-  def cast(%{} = taxes) do
+  @spec cast_list(nil) :: nil
+  def cast_list(nil) do
+    []
+  end
+
+  defp cast(%{} = taxes) do
     Enum.reduce(taxes, %__MODULE__{}, fn
       {"year", year}, acc -> %__MODULE__{acc | year: year}
       {"amount", amount}, acc -> %__MODULE__{acc | amount: amount}

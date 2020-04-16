@@ -50,11 +50,19 @@ defmodule Estated.MarketAssessment do
   @typedoc since: "0.1.0"
   @type total_value :: integer()
 
-  def cast(market_assessments) when is_list(market_assessments) do
+  @doc false
+  @doc since: "0.1.0"
+  @spec cast_list([map()]) :: [t()]
+  def cast_list(market_assessments) when is_list(market_assessments) do
     Enum.map(market_assessments, &cast/1)
   end
 
-  def cast(%{} = market_assessment) do
+  @spec cast_list(nil) :: []
+  def cast_list(nil) do
+    []
+  end
+
+  defp cast(%{} = market_assessment) do
     Enum.reduce(market_assessment, %__MODULE__{}, fn
       {"year", year}, acc ->
         %__MODULE__{acc | year: year}

@@ -12,18 +12,30 @@ defmodule Estated.PropertyMetadata do
           publishing_date: publishing_date() | nil
         }
 
-  @typedoc "The date the data was made available at the source."
+  @typedoc """
+  The date the data was made available at the source.
+
+  Eg. **2018-02-14**
+  """
   @typedoc since: "0.1.0"
   @type publishing_date :: Date.t()
 
-  def cast(%{} = metadata) do
-    Enum.reduce(metadata, %__MODULE__{}, fn
+  @doc false
+  @doc since: "0.1.0"
+  @spec cast(map()) :: t()
+  def cast(%{} = property_metadata) do
+    Enum.reduce(property_metadata, %__MODULE__{}, fn
       {"publishing_date", publishing_date}, acc ->
         %__MODULE__{acc | publishing_date: cast_date(publishing_date)}
 
       _, acc ->
         acc
     end)
+  end
+
+  @spec cast(nil) :: nil
+  def cast(nil) do
+    nil
   end
 
   defp cast_date(date_string) when is_binary(date_string) do

@@ -60,6 +60,9 @@ defmodule Estated.Error do
   @typedoc since: "0.1.0"
   @type metadata :: map()
 
+  @doc false
+  @doc since: "0.1.0"
+  @spec cast(map()) :: t()
   def cast(%{} = error) do
     Enum.reduce(error, %__MODULE__{}, fn
       {"code", code}, acc -> %__MODULE__{acc | code: code}
@@ -69,5 +72,10 @@ defmodule Estated.Error do
       {"metadata", metadata}, acc -> %__MODULE__{acc | metadata: metadata}
       _, acc -> acc
     end)
+  end
+
+  @spec cast(nil) :: nil
+  def cast(nil) do
+    nil
   end
 end

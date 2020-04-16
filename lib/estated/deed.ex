@@ -404,11 +404,19 @@ defmodule Estated.Deed do
   @typedoc since: "0.1.0"
   @type load_interest_rate :: float()
 
-  def cast(deeds) when is_list(deeds) do
+  @doc false
+  @doc since: "0.1.0"
+  @spec cast_list([map()]) :: [t()]
+  def cast_list(deeds) when is_list(deeds) do
     Enum.map(deeds, &cast/1)
   end
 
-  def cast(%{} = deed) do
+  @spec cast_list(nil) :: []
+  def cast_list(nil) do
+    []
+  end
+
+  defp cast(%{} = deed) do
     Enum.reduce(deed, %__MODULE__{}, fn
       {"document_type", document_type}, acc ->
         %__MODULE__{acc | document_type: document_type}

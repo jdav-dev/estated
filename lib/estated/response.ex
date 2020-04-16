@@ -31,13 +31,21 @@ defmodule Estated.Response do
           warnings: [Warning.t()]
         }
 
+  @doc false
+  @doc since: "0.1.0"
+  @spec cast(map()) :: t()
   def cast(%{} = response) do
     Enum.reduce(response, %__MODULE__{}, fn
       {"data", data}, acc -> %__MODULE__{acc | data: Property.cast(data)}
       {"error", error}, acc -> %__MODULE__{acc | error: Error.cast(error)}
       {"metadata", metadata}, acc -> %__MODULE__{acc | metadata: ResponseMetadata.cast(metadata)}
-      {"warnings", warnings}, acc -> %__MODULE__{acc | warnings: Warning.cast(warnings)}
+      {"warnings", warnings}, acc -> %__MODULE__{acc | warnings: Warning.cast_list(warnings)}
       _, acc -> acc
     end)
+  end
+
+  @spec cast(nil) :: nil
+  def cast(nil) do
+    nil
   end
 end

@@ -41,6 +41,9 @@ defmodule Estated.Property do
           deeds: Deed.deeds()
         }
 
+  @doc false
+  @doc since: "0.1.0"
+  @spec cast(map()) :: t()
   def cast(%{} = property) do
     Enum.reduce(property, %__MODULE__{}, fn
       {"metadata", metadata}, acc ->
@@ -56,13 +59,13 @@ defmodule Estated.Property do
         %__MODULE__{acc | structure: Structure.cast(structure)}
 
       {"taxes", taxes}, acc ->
-        %__MODULE__{acc | taxes: Tax.cast(taxes)}
+        %__MODULE__{acc | taxes: Tax.cast_list(taxes)}
 
       {"assessments", assessments}, acc ->
-        %__MODULE__{acc | assessments: Assessment.cast(assessments)}
+        %__MODULE__{acc | assessments: Assessment.cast_list(assessments)}
 
       {"market_assessments", market_assessments}, acc ->
-        %__MODULE__{acc | market_assessments: MarketAssessment.cast(market_assessments)}
+        %__MODULE__{acc | market_assessments: MarketAssessment.cast_list(market_assessments)}
 
       {"valuation", valuation}, acc ->
         %__MODULE__{acc | valuation: Valuation.cast(valuation)}
@@ -71,13 +74,14 @@ defmodule Estated.Property do
         %__MODULE__{acc | owner: Owner.cast(owner)}
 
       {"deeds", deeds}, acc ->
-        %__MODULE__{acc | deeds: Deed.cast(deeds)}
+        %__MODULE__{acc | deeds: Deed.cast_list(deeds)}
 
       _, acc ->
         acc
     end)
   end
 
+  @spec cast(nil) :: nil
   def cast(nil) do
     nil
   end

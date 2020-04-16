@@ -12,13 +12,21 @@ defmodule Estated.WarningMetadata do
           properties: [WarningMetadataProperty.t()]
         }
 
-  def cast(%{} = metadata) do
-    Enum.reduce(metadata, %__MODULE__{}, fn
+  @doc false
+  @doc since: "0.1.0"
+  @spec cast(map()) :: t()
+  def cast(%{} = warning_metadata) do
+    Enum.reduce(warning_metadata, %__MODULE__{}, fn
       {"properties", properties}, acc ->
-        %__MODULE__{acc | properties: WarningMetadataProperty.cast(properties)}
+        %__MODULE__{acc | properties: WarningMetadataProperty.cast_list(properties)}
 
       _, acc ->
         acc
     end)
+  end
+
+  @spec cast(nil) :: nil
+  def cast(nil) do
+    nil
   end
 end

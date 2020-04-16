@@ -24,12 +24,20 @@ defmodule Estated.WarningMetadataProperty do
           apn: Parcel.apn_original() | nil
         }
 
-  def cast(properties) when is_list(properties) do
-    Enum.map(properties, &cast/1)
+  @doc false
+  @doc since: "0.1.0"
+  @spec cast_list([map()]) :: [t()]
+  def cast_list(warning_metadata_properties) when is_list(warning_metadata_properties) do
+    Enum.map(warning_metadata_properties, &cast/1)
   end
 
-  def cast(%{} = properties) do
-    Enum.reduce(properties, %__MODULE__{}, fn
+  @spec cast_list(nil) :: []
+  def cast_list(nil) do
+    []
+  end
+
+  defp cast(%{} = warning_metadata_property) do
+    Enum.reduce(warning_metadata_property, %__MODULE__{}, fn
       {"fips", fips}, acc -> %__MODULE__{acc | fips: fips}
       {"apn", apn}, acc -> %__MODULE__{acc | apn: apn}
       _, acc -> acc

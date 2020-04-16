@@ -23,46 +23,32 @@ defmodule Estated.OtherImprovement do
   @type type :: String.t()
 
   @typedoc """
-  Size of the improvement as an integer, float, or string describing a rectangle (e.g. `"24X16"`).
+  Size in sq ft.
+
+  Size is a string holding an integer, float, or rectangle (e.g. "24X16").
 
   Eg. **346**
   """
   @typedoc since: "0.1.0"
-  @type sq_ft :: integer() | float() | String.t()
+  @type sq_ft :: String.t()
 
-  def cast(other_improvements) when is_list(other_improvements) do
+  @doc false
+  @doc since: "0.1.0"
+  @spec cast_list([map()]) :: [t()]
+  def cast_list(other_improvements) when is_list(other_improvements) do
     Enum.map(other_improvements, &cast/1)
   end
 
-  def cast(%{} = other_improvement) do
+  @spec cast_list(nil) :: []
+  def cast_list(nil) do
+    []
+  end
+
+  defp cast(%{} = other_improvement) do
     Enum.reduce(other_improvement, %__MODULE__{}, fn
       {"type", type}, acc -> %__MODULE__{acc | type: type}
-      {"sq_ft", sq_ft}, acc -> %__MODULE__{acc | sq_ft: cast_sq_ft(sq_ft)}
+      {"sq_ft", sq_ft}, acc -> %__MODULE__{acc | sq_ft: sq_ft}
       _, acc -> acc
     end)
-  end
-
-  defp cast_sq_ft(sq_ft) when is_binary(sq_ft) do
-    sq_ft
-    |> try_integer()
-    |> try_float()
-  end
-
-  defp cast_sq_ft(sq_ft) do
-    sq_ft
-  end
-
-  defp try_integer(sq_ft) when is_binary(sq_ft) do
-    case Integer.parse(sq_ft) do
-      {integer, _remainder_of_binary} -> integer
-      :error -> sq_ft
-    end
-  end
-
-  defp try_float(sq_ft) when is_binary(sq_ft) do
-    case Float.parse(sq_ft) do
-      {float, _remainder_of_binary} -> float
-      :error -> sq_ft
-    end
   end
 end

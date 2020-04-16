@@ -17,7 +17,7 @@ defmodule Estated.Address do
     :zip_plus_four_code,
     :carrier_code,
     :latitude,
-    :longitute,
+    :longitude,
     :geocoding_accuracy,
     :census_tract
   ]
@@ -39,7 +39,7 @@ defmodule Estated.Address do
           zip_plus_four_code: zip_plus_four_code() | nil,
           carrier_code: carrier_code() | nil,
           latitude: latitude() | nil,
-          longitute: longitute() | nil,
+          longitude: longitude() | nil,
           geocoding_accuracy: geocoding_accuracy() | nil,
           census_tract: census_tract() | nil
         }
@@ -164,7 +164,7 @@ defmodule Estated.Address do
   Eg. **-87.649191**
   """
   @typedoc since: "0.1.0"
-  @type longitute :: float()
+  @type longitude :: float()
 
   @typedoc """
   Describes the level of geocoding match.
@@ -182,6 +182,9 @@ defmodule Estated.Address do
   @typedoc since: "0.1.0"
   @type census_tract :: String.t()
 
+  @doc false
+  @doc since: "0.1.0"
+  @spec cast(map()) :: t()
   def cast(%{} = address) do
     Enum.reduce(address, %__MODULE__{}, fn
       {"street_number", street_number}, acc ->
@@ -226,8 +229,8 @@ defmodule Estated.Address do
       {"latitude", latitude}, acc ->
         %__MODULE__{acc | latitude: latitude}
 
-      {"longitute", longitute}, acc ->
-        %__MODULE__{acc | longitute: longitute}
+      {"longitude", longitude}, acc ->
+        %__MODULE__{acc | longitude: longitude}
 
       {"geocoding_accuracy", geocoding_accuracy}, acc ->
         %__MODULE__{acc | geocoding_accuracy: geocoding_accuracy}
@@ -238,5 +241,10 @@ defmodule Estated.Address do
       _, acc ->
         acc
     end)
+  end
+
+  @spec cast(nil) :: nil
+  def cast(nil) do
+    nil
   end
 end

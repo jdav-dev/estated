@@ -60,6 +60,9 @@ defmodule Estated.Valuation do
   @typedoc since: "0.1.0"
   @type date :: Date.t()
 
+  @doc false
+  @doc since: "0.1.0"
+  @spec cast(map()) :: t()
   def cast(%{} = valuation) do
     Enum.reduce(valuation, %__MODULE__{}, fn
       {"value", value}, acc ->
@@ -80,6 +83,11 @@ defmodule Estated.Valuation do
       _, acc ->
         acc
     end)
+  end
+
+  @spec cast(nil) :: nil
+  def cast(nil) do
+    nil
   end
 
   defp cast_date(date_string) when is_binary(date_string) do

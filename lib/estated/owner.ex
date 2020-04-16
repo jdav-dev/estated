@@ -104,6 +104,9 @@ defmodule Estated.Owner do
   @typedoc since: "0.1.0"
   @type owner_occupied :: String.t()
 
+  @doc false
+  @doc since: "0.1.0"
+  @spec cast(map()) :: t()
   def cast(%{} = owner) do
     Enum.reduce(owner, %__MODULE__{}, fn
       {"name", name}, acc ->
@@ -136,5 +139,10 @@ defmodule Estated.Owner do
       _, acc ->
         acc
     end)
+  end
+
+  @spec cast(nil) :: nil
+  def cast(nil) do
+    nil
   end
 end

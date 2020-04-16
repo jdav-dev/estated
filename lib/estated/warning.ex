@@ -48,15 +48,19 @@ defmodule Estated.Warning do
   @typedoc since: "0.1.0"
   @type description :: String.t()
 
-  @typedoc "Metadata related to the warning."
-  @typedoc since: "0.1.0"
-  @type metadata :: map()
-
-  def cast(warnings) when is_list(warnings) do
+  @doc false
+  @doc since: "0.1.0"
+  @spec cast_list([map()]) :: [t()]
+  def cast_list(warnings) when is_list(warnings) do
     Enum.map(warnings, &cast/1)
   end
 
-  def cast(%{} = warning) do
+  @spec cast_list(nil) :: []
+  def cast_list(nil) do
+    []
+  end
+
+  defp cast(%{} = warning) do
     Enum.reduce(warning, %__MODULE__{}, fn
       {"code", code}, acc -> %__MODULE__{acc | code: code}
       {"title", title}, acc -> %__MODULE__{acc | title: title}

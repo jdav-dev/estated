@@ -14,8 +14,11 @@ defmodule Estated.ResponseMetadata do
           version: String.t() | nil
         }
 
-  def cast(%{} = metadata) do
-    Enum.reduce(metadata, %__MODULE__{}, fn
+  @doc false
+  @doc since: "0.1.0"
+  @spec cast(map()) :: t()
+  def cast(%{} = response_metadata) do
+    Enum.reduce(response_metadata, %__MODULE__{}, fn
       {"timestamp", timestamp}, acc ->
         %__MODULE__{acc | timestamp: cast_timestamp(timestamp)}
 
@@ -25,6 +28,11 @@ defmodule Estated.ResponseMetadata do
       _, acc ->
         acc
     end)
+  end
+
+  @spec cast(nil) :: nil
+  def cast(nil) do
+    nil
   end
 
   defp cast_timestamp(timestamp) when is_binary(timestamp) do

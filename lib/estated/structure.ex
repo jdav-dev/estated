@@ -346,6 +346,9 @@ defmodule Estated.Structure do
   @typedoc since: "0.1.0"
   @type amenities :: [String.t()]
 
+  @doc false
+  @doc since: "0.1.0"
+  @spec cast(map()) :: t()
   def cast(%{} = structure) do
     Enum.reduce(structure, %__MODULE__{}, fn
       {"year_built", year_built}, acc ->
@@ -439,13 +442,13 @@ defmodule Estated.Structure do
         %__MODULE__{acc | total_area_sq_ft: total_area_sq_ft}
 
       {"other_areas", other_areas}, acc ->
-        %__MODULE__{acc | other_areas: OtherArea.cast(other_areas)}
+        %__MODULE__{acc | other_areas: OtherArea.cast_list(other_areas)}
 
       {"other_features", other_features}, acc ->
-        %__MODULE__{acc | other_features: OtherFeature.cast(other_features)}
+        %__MODULE__{acc | other_features: OtherFeature.cast_list(other_features)}
 
       {"other_improvements", other_improvements}, acc ->
-        %__MODULE__{acc | other_improvements: OtherImprovement.cast(other_improvements)}
+        %__MODULE__{acc | other_improvements: OtherImprovement.cast_list(other_improvements)}
 
       {"other_rooms", other_rooms}, acc ->
         %__MODULE__{acc | other_rooms: other_rooms}
@@ -458,6 +461,7 @@ defmodule Estated.Structure do
     end)
   end
 
+  @spec cast(nil) :: nil
   def cast(nil) do
     nil
   end
