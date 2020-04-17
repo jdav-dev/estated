@@ -2,6 +2,8 @@ defmodule Estated.OtherArea do
   @moduledoc "Area within a building."
   @moduledoc since: "0.1.0"
 
+  import Estated.CastHelpers, only: [cast_integer: 1]
+
   defstruct [
     :type,
     :sq_ft
@@ -56,16 +58,5 @@ defmodule Estated.OtherArea do
 
   defp cast_field(_map_entry, acc) do
     acc
-  end
-
-  defp cast_integer(binary) when is_binary(binary) do
-    case Integer.parse(binary) do
-      {integer, _remainder_of_binary} -> integer
-      :error -> binary
-    end
-  end
-
-  defp cast_integer(integer) do
-    integer
   end
 end

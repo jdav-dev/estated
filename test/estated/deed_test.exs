@@ -99,18 +99,6 @@ defmodule Estated.DeedTest do
     end
 
     @tag :unit
-    test "passes through dates that fail to parse" do
-      deeds = [%{"recording_date" => "invalid date"}]
-      assert [%Deed{recording_date: "invalid date"}] == Deed.cast_list(deeds)
-    end
-
-    @tag :unit
-    test "passes through dates that are not strings" do
-      deeds = [%{"recording_date" => 0}]
-      assert [%Deed{recording_date: 0}] == Deed.cast_list(deeds)
-    end
-
-    @tag :unit
     test "casts nil as an empty list" do
       assert [] == Deed.cast_list(nil)
     end

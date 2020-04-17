@@ -19,20 +19,6 @@ defmodule Estated.PropertyMetadataTest do
     end
 
     @tag :unit
-    test "passes through dates that fail to parse" do
-      property_metadata = %{"publishing_date" => "invalid date"}
-
-      assert %PropertyMetadata{publishing_date: "invalid date"} ==
-               PropertyMetadata.cast(property_metadata)
-    end
-
-    @tag :unit
-    test "passes through dates that are not strings" do
-      property_metadata = %{"publishing_date" => 0}
-      assert %PropertyMetadata{publishing_date: 0} == PropertyMetadata.cast(property_metadata)
-    end
-
-    @tag :unit
     test "casts nil as nil" do
       assert nil == PropertyMetadata.cast(nil)
     end

@@ -25,18 +25,6 @@ defmodule Estated.OtherAreaTest do
     end
 
     @tag :unit
-    test "passes through integers that fail to parse" do
-      other_areas = [%{"sq_ft" => "invalid integer"}]
-      assert [%OtherArea{sq_ft: "invalid integer"}] == OtherArea.cast_list(other_areas)
-    end
-
-    @tag :unit
-    test "passes through integers that are not strings" do
-      other_areas = [%{"sq_ft" => true}]
-      assert [%OtherArea{sq_ft: true}] == OtherArea.cast_list(other_areas)
-    end
-
-    @tag :unit
     test "casts nil as an empty list" do
       assert [] == OtherArea.cast_list(nil)
     end

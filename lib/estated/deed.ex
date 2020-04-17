@@ -2,6 +2,8 @@ defmodule Estated.Deed do
   @moduledoc "Sale and mortgage data which constitute a deed record."
   @moduledoc since: "0.1.0"
 
+  import Estated.CastHelpers, only: [cast_date: 1]
+
   defstruct [
     :document_type,
     :recording_date,
@@ -578,16 +580,5 @@ defmodule Estated.Deed do
 
   defp cast_field(_map_entry, acc) do
     acc
-  end
-
-  defp cast_date(date_string) when is_binary(date_string) do
-    case Date.from_iso8601(date_string) do
-      {:ok, date} -> date
-      {:error, _reason} -> date_string
-    end
-  end
-
-  defp cast_date(date) do
-    date
   end
 end

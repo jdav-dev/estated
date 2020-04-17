@@ -21,20 +21,6 @@ defmodule Estated.ResponseMetadataTest do
     end
 
     @tag :unit
-    test "passes through timestamps that fail to parse" do
-      response_metadata = %{"timestamp" => "invalid timestamp"}
-
-      assert %ResponseMetadata{timestamp: "invalid timestamp"} ==
-               ResponseMetadata.cast(response_metadata)
-    end
-
-    @tag :unit
-    test "passes through timestamps that are not strings" do
-      response_metadata = %{"timestamp" => 0}
-      assert %ResponseMetadata{timestamp: 0} == ResponseMetadata.cast(response_metadata)
-    end
-
-    @tag :unit
     test "casts nil as nil" do
       assert nil == ResponseMetadata.cast(nil)
     end

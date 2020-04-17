@@ -27,18 +27,6 @@ defmodule Estated.ValuationTest do
     end
 
     @tag :unit
-    test "passes through dates that fail to parse" do
-      valuation = %{"date" => "invalid date"}
-      assert %Valuation{date: "invalid date"} == Valuation.cast(valuation)
-    end
-
-    @tag :unit
-    test "passes through dates that are not strings" do
-      valuation = %{"date" => 0}
-      assert %Valuation{date: 0} == Valuation.cast(valuation)
-    end
-
-    @tag :unit
     test "casts nil as nil" do
       assert nil == Valuation.cast(nil)
     end

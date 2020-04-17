@@ -2,6 +2,8 @@ defmodule Estated.ResponseMetadata do
   @moduledoc "Metadata related to the request."
   @moduledoc since: "0.1.0"
 
+  import Estated.CastHelpers, only: [cast_datetime: 1]
+
   defstruct [
     :timestamp,
     :version
@@ -27,7 +29,7 @@ defmodule Estated.ResponseMetadata do
   end
 
   defp cast_field({"timestamp", timestamp}, acc) do
-    %__MODULE__{acc | timestamp: cast_timestamp(timestamp)}
+    %__MODULE__{acc | timestamp: cast_datetime(timestamp)}
   end
 
   defp cast_field({"version", version}, acc) do
@@ -36,16 +38,5 @@ defmodule Estated.ResponseMetadata do
 
   defp cast_field(_map_entry, acc) do
     acc
-  end
-
-  defp cast_timestamp(timestamp) when is_binary(timestamp) do
-    case DateTime.from_iso8601(timestamp) do
-      {:ok, datetime, _utc_offset} -> datetime
-      {:error, _reason} -> timestamp
-    end
-  end
-
-  defp cast_timestamp(timestamp) do
-    timestamp
   end
 end

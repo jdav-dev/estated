@@ -2,6 +2,8 @@ defmodule Estated.PropertyMetadata do
   @moduledoc "Metadata related to the property."
   @moduledoc since: "0.1.0"
 
+  import Estated.CastHelpers, only: [cast_date: 1]
+
   defstruct [
     :publishing_date
   ]
@@ -38,16 +40,5 @@ defmodule Estated.PropertyMetadata do
 
   defp cast_field(_map_entry, acc) do
     acc
-  end
-
-  defp cast_date(date_string) when is_binary(date_string) do
-    case Date.from_iso8601(date_string) do
-      {:ok, date} -> date
-      {:error, _reason} -> date_string
-    end
-  end
-
-  defp cast_date(date) do
-    date
   end
 end
