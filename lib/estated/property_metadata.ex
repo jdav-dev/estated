@@ -24,18 +24,20 @@ defmodule Estated.PropertyMetadata do
   @doc since: "0.1.0"
   @spec cast(map()) :: t()
   def cast(%{} = property_metadata) do
-    Enum.reduce(property_metadata, %__MODULE__{}, fn
-      {"publishing_date", publishing_date}, acc ->
-        %__MODULE__{acc | publishing_date: cast_date(publishing_date)}
-
-      _map_entry, acc ->
-        acc
-    end)
+    Enum.reduce(property_metadata, %__MODULE__{}, &cast_field/2)
   end
 
   @spec cast(nil) :: nil
   def cast(nil) do
     nil
+  end
+
+  defp cast_field({"publishing_date", publishing_date}, acc) do
+    %__MODULE__{acc | publishing_date: cast_date(publishing_date)}
+  end
+
+  defp cast_field(_map_entry, acc) do
+    acc
   end
 
   defp cast_date(date_string) when is_binary(date_string) do

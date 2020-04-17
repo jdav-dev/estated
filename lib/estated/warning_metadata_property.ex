@@ -37,10 +37,18 @@ defmodule Estated.WarningMetadataProperty do
   end
 
   defp cast(%{} = warning_metadata_property) do
-    Enum.reduce(warning_metadata_property, %__MODULE__{}, fn
-      {"fips", fips}, acc -> %__MODULE__{acc | fips: fips}
-      {"apn", apn}, acc -> %__MODULE__{acc | apn: apn}
-      _map_entry, acc -> acc
-    end)
+    Enum.reduce(warning_metadata_property, %__MODULE__{}, &cast_field/2)
+  end
+
+  defp cast_field({"fips", fips}, acc) do
+    %__MODULE__{acc | fips: fips}
+  end
+
+  defp cast_field({"apn", apn}, acc) do
+    %__MODULE__{acc | apn: apn}
+  end
+
+  defp cast_field(_map_entry, acc) do
+    acc
   end
 end

@@ -43,11 +43,19 @@ defmodule Estated.OtherArea do
   end
 
   defp cast(%{} = other_area) do
-    Enum.reduce(other_area, %__MODULE__{}, fn
-      {"type", type}, acc -> %__MODULE__{acc | type: type}
-      {"sq_ft", sq_ft}, acc -> %__MODULE__{acc | sq_ft: cast_integer(sq_ft)}
-      _map_entry, acc -> acc
-    end)
+    Enum.reduce(other_area, %__MODULE__{}, &cast_field/2)
+  end
+
+  defp cast_field({"type", type}, acc) do
+    %__MODULE__{acc | type: type}
+  end
+
+  defp cast_field({"sq_ft", sq_ft}, acc) do
+    %__MODULE__{acc | sq_ft: cast_integer(sq_ft)}
+  end
+
+  defp cast_field(_map_entry, acc) do
+    acc
   end
 
   defp cast_integer(binary) when is_binary(binary) do

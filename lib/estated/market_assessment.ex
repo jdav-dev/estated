@@ -67,21 +67,26 @@ defmodule Estated.MarketAssessment do
   end
 
   defp cast(%{} = market_assessment) do
-    Enum.reduce(market_assessment, %__MODULE__{}, fn
-      {"year", year}, acc ->
-        %__MODULE__{acc | year: year}
+    Enum.reduce(market_assessment, %__MODULE__{}, &cast_field/2)
+  end
 
-      {"land_value", land_value}, acc ->
-        %__MODULE__{acc | land_value: land_value}
+  defp cast_field({"year", year}, acc) do
+    %__MODULE__{acc | year: year}
+  end
 
-      {"improvement_value", improvement_value}, acc ->
-        %__MODULE__{acc | improvement_value: improvement_value}
+  defp cast_field({"land_value", land_value}, acc) do
+    %__MODULE__{acc | land_value: land_value}
+  end
 
-      {"total_value", total_value}, acc ->
-        %__MODULE__{acc | total_value: total_value}
+  defp cast_field({"improvement_value", improvement_value}, acc) do
+    %__MODULE__{acc | improvement_value: improvement_value}
+  end
 
-      _map_entry, acc ->
-        acc
-    end)
+  defp cast_field({"total_value", total_value}, acc) do
+    %__MODULE__{acc | total_value: total_value}
+  end
+
+  defp cast_field(_map_entry, acc) do
+    acc
   end
 end

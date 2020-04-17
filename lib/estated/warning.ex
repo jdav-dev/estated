@@ -61,12 +61,26 @@ defmodule Estated.Warning do
   end
 
   defp cast(%{} = warning) do
-    Enum.reduce(warning, %__MODULE__{}, fn
-      {"code", code}, acc -> %__MODULE__{acc | code: code}
-      {"title", title}, acc -> %__MODULE__{acc | title: title}
-      {"description", description}, acc -> %__MODULE__{acc | description: description}
-      {"metadata", metadata}, acc -> %__MODULE__{acc | metadata: WarningMetadata.cast(metadata)}
-      _map_entry, acc -> acc
-    end)
+    Enum.reduce(warning, %__MODULE__{}, &cast_field/2)
+  end
+
+  defp cast_field({"code", code}, acc) do
+    %__MODULE__{acc | code: code}
+  end
+
+  defp cast_field({"title", title}, acc) do
+    %__MODULE__{acc | title: title}
+  end
+
+  defp cast_field({"description", description}, acc) do
+    %__MODULE__{acc | description: description}
+  end
+
+  defp cast_field({"metadata", metadata}, acc) do
+    %__MODULE__{acc | metadata: WarningMetadata.cast(metadata)}
+  end
+
+  defp cast_field(_map_entry, acc) do
+    acc
   end
 end

@@ -62,12 +62,26 @@ defmodule Estated.Tax do
   end
 
   defp cast(%{} = taxes) do
-    Enum.reduce(taxes, %__MODULE__{}, fn
-      {"year", year}, acc -> %__MODULE__{acc | year: year}
-      {"amount", amount}, acc -> %__MODULE__{acc | amount: amount}
-      {"exemptions", exemptions}, acc -> %__MODULE__{acc | exemptions: exemptions}
-      {"rate_code_area", rate_code_area}, acc -> %__MODULE__{acc | rate_code_area: rate_code_area}
-      _map_entry, acc -> acc
-    end)
+    Enum.reduce(taxes, %__MODULE__{}, &cast_field/2)
+  end
+
+  defp cast_field({"year", year}, acc) do
+    %__MODULE__{acc | year: year}
+  end
+
+  defp cast_field({"amount", amount}, acc) do
+    %__MODULE__{acc | amount: amount}
+  end
+
+  defp cast_field({"exemptions", exemptions}, acc) do
+    %__MODULE__{acc | exemptions: exemptions}
+  end
+
+  defp cast_field({"rate_code_area", rate_code_area}, acc) do
+    %__MODULE__{acc | rate_code_area: rate_code_area}
+  end
+
+  defp cast_field(_map_entry, acc) do
+    acc
   end
 end
