@@ -33,7 +33,9 @@ jobs:
           mix local.hex --force
           mix deps.get --only test
       - name: test
-        run: mix test --cover --trace
+        env:
+          ESTATED_SANDBOX_API_KEY: ${{ secrets.ESTATED_SANDBOX_API_KEY }}
+        run: mix test --cover --include estated_sandbox_api
       - name: archive code coverage
         uses: actions/upload-artifact@v1
         with:
