@@ -134,7 +134,7 @@ defmodule Estated do
     |> Map.from_struct()
     |> Enum.reject(&(&1 |> elem(1) |> is_nil()))
     |> Enum.into(%{})
-    |> Map.put(:api_key, api_key)
+    |> Map.put(:token, api_key)
     |> URI.encode_query()
   end
 
