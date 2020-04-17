@@ -44,11 +44,11 @@ defmodule Estated.DeedTest do
           "buyer_zip_plus_four_code" => "3019",
           "lender_name" => "CITIMORTGAGE INC",
           "lender_type" => "BANK",
-          "loan_amount" => 74900,
+          "loan_amount" => 74_900,
           "loan_type" => "CLOSED MORTGAGE",
           "loan_due_date" => "2029-10-22",
           "loan_finance_type" => "FIXED RATE",
-          "load_interest_rate" => 2.97,
+          "loan_interest_rate" => 2.97,
           "ignore me" => nil
         }
       ]
@@ -89,11 +89,11 @@ defmodule Estated.DeedTest do
                  buyer_zip_plus_four_code: "3019",
                  lender_name: "CITIMORTGAGE INC",
                  lender_type: "BANK",
-                 loan_amount: 74900,
+                 loan_amount: 74_900,
                  loan_type: "CLOSED MORTGAGE",
                  loan_due_date: ~D[2029-10-22],
                  loan_finance_type: "FIXED RATE",
-                 load_interest_rate: 2.97
+                 loan_interest_rate: 2.97
                }
              ] == Deed.cast_list(deeds)
     end

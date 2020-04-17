@@ -45,44 +45,55 @@ defmodule Estated.Property do
   @doc since: "0.1.0"
   @spec cast(map()) :: t()
   def cast(%{} = property) do
-    Enum.reduce(property, %__MODULE__{}, fn
-      {"metadata", metadata}, acc ->
-        %__MODULE__{acc | metadata: PropertyMetadata.cast(metadata)}
-
-      {"address", address}, acc ->
-        %__MODULE__{acc | address: Address.cast(address)}
-
-      {"parcel", parcel}, acc ->
-        %__MODULE__{acc | parcel: Parcel.cast(parcel)}
-
-      {"structure", structure}, acc ->
-        %__MODULE__{acc | structure: Structure.cast(structure)}
-
-      {"taxes", taxes}, acc ->
-        %__MODULE__{acc | taxes: Tax.cast_list(taxes)}
-
-      {"assessments", assessments}, acc ->
-        %__MODULE__{acc | assessments: Assessment.cast_list(assessments)}
-
-      {"market_assessments", market_assessments}, acc ->
-        %__MODULE__{acc | market_assessments: MarketAssessment.cast_list(market_assessments)}
-
-      {"valuation", valuation}, acc ->
-        %__MODULE__{acc | valuation: Valuation.cast(valuation)}
-
-      {"owner", owner}, acc ->
-        %__MODULE__{acc | owner: Owner.cast(owner)}
-
-      {"deeds", deeds}, acc ->
-        %__MODULE__{acc | deeds: Deed.cast_list(deeds)}
-
-      _, acc ->
-        acc
-    end)
+    Enum.reduce(property, %__MODULE__{}, &cast_field/2)
   end
 
   @spec cast(nil) :: nil
   def cast(nil) do
     nil
+  end
+
+  defp cast_field({"metadata", metadata}, acc) do
+    %__MODULE__{acc | metadata: PropertyMetadata.cast(metadata)}
+  end
+
+  defp cast_field({"address", address}, acc) do
+    %__MODULE__{acc | address: Address.cast(address)}
+  end
+
+  defp cast_field({"parcel", parcel}, acc) do
+    %__MODULE__{acc | parcel: Parcel.cast(parcel)}
+  end
+
+  defp cast_field({"structure", structure}, acc) do
+    %__MODULE__{acc | structure: Structure.cast(structure)}
+  end
+
+  defp cast_field({"taxes", taxes}, acc) do
+    %__MODULE__{acc | taxes: Tax.cast_list(taxes)}
+  end
+
+  defp cast_field({"assessments", assessments}, acc) do
+    %__MODULE__{acc | assessments: Assessment.cast_list(assessments)}
+  end
+
+  defp cast_field({"market_assessments", market_assessments}, acc) do
+    %__MODULE__{acc | market_assessments: MarketAssessment.cast_list(market_assessments)}
+  end
+
+  defp cast_field({"valuation", valuation}, acc) do
+    %__MODULE__{acc | valuation: Valuation.cast(valuation)}
+  end
+
+  defp cast_field({"owner", owner}, acc) do
+    %__MODULE__{acc | owner: Owner.cast(owner)}
+  end
+
+  defp cast_field({"deeds", deeds}, acc) do
+    %__MODULE__{acc | deeds: Deed.cast_list(deeds)}
+  end
+
+  defp cast_field(_map_entry, acc) do
+    acc
   end
 end

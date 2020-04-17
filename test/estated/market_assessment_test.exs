@@ -11,9 +11,9 @@ defmodule Estated.MarketAssessmentTest do
       market_assessments = [
         %{
           "year" => 2017,
-          "land_value" => 3000,
-          "improvement_value" => 12000,
-          "total_value" => 15000,
+          "land_value" => 3_000,
+          "improvement_value" => 12_000,
+          "total_value" => 15_000,
           "ignore me" => nil
         }
       ]
@@ -21,9 +21,9 @@ defmodule Estated.MarketAssessmentTest do
       assert [
                %MarketAssessment{
                  year: 2017,
-                 land_value: 3000,
-                 improvement_value: 12000,
-                 total_value: 15000
+                 land_value: 3_000,
+                 improvement_value: 12_000,
+                 total_value: 15_000
                }
              ] == MarketAssessment.cast_list(market_assessments)
     end

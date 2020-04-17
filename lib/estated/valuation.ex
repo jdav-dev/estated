@@ -64,30 +64,36 @@ defmodule Estated.Valuation do
   @doc since: "0.1.0"
   @spec cast(map()) :: t()
   def cast(%{} = valuation) do
-    Enum.reduce(valuation, %__MODULE__{}, fn
-      {"value", value}, acc ->
-        %__MODULE__{acc | value: value}
-
-      {"high", high}, acc ->
-        %__MODULE__{acc | high: high}
-
-      {"low", low}, acc ->
-        %__MODULE__{acc | low: low}
-
-      {"forecast_standard_deviation", forecast_standard_deviation}, acc ->
-        %__MODULE__{acc | forecast_standard_deviation: forecast_standard_deviation}
-
-      {"date", date}, acc ->
-        %__MODULE__{acc | date: cast_date(date)}
-
-      _, acc ->
-        acc
-    end)
+    Enum.reduce(valuation, %__MODULE__{}, &cast_field/2)
   end
 
   @spec cast(nil) :: nil
   def cast(nil) do
     nil
+  end
+
+  defp cast_field({"value", value}, acc) do
+    %__MODULE__{acc | value: value}
+  end
+
+  defp cast_field({"high", high}, acc) do
+    %__MODULE__{acc | high: high}
+  end
+
+  defp cast_field({"low", low}, acc) do
+    %__MODULE__{acc | low: low}
+  end
+
+  defp cast_field({"forecast_standard_deviation", forecast_standard_deviation}, acc) do
+    %__MODULE__{acc | forecast_standard_deviation: forecast_standard_deviation}
+  end
+
+  defp cast_field({"date", date}, acc) do
+    %__MODULE__{acc | date: cast_date(date)}
+  end
+
+  defp cast_field(_map_entry, acc) do
+    acc
   end
 
   defp cast_date(date_string) when is_binary(date_string) do

@@ -11,9 +11,9 @@ defmodule Estated.AssessmentTest do
       assessments = [
         %{
           "year" => 2018,
-          "land_value" => 2580,
-          "improvement_value" => 13300,
-          "total_value" => 15880,
+          "land_value" => 2_580,
+          "improvement_value" => 13_300,
+          "total_value" => 15_880,
           "ignore me" => nil
         }
       ]
@@ -21,9 +21,9 @@ defmodule Estated.AssessmentTest do
       assert [
                %Assessment{
                  year: 2018,
-                 land_value: 2580,
-                 improvement_value: 13300,
-                 total_value: 15880
+                 land_value: 2_580,
+                 improvement_value: 13_300,
+                 total_value: 15_880
                }
              ] == Assessment.cast_list(assessments)
     end

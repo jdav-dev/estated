@@ -28,7 +28,7 @@ defmodule Estated.PropertyMetadata do
       {"publishing_date", publishing_date}, acc ->
         %__MODULE__{acc | publishing_date: cast_date(publishing_date)}
 
-      _, acc ->
+      _map_entry, acc ->
         acc
     end)
   end

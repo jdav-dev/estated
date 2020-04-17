@@ -2,6 +2,10 @@ defmodule Estated.Assessment do
   @moduledoc "Tax assessment information as provided by the assessor."
   @moduledoc since: "0.1.0"
 
+  # Assessment is very similar to MarketAssessment, but they are separate in Estated and
+  # documented differently.
+  # credo:disable-for-this-file Credo.Check.Design.DuplicatedCode
+
   defstruct [
     :year,
     :land_value,
@@ -76,7 +80,7 @@ defmodule Estated.Assessment do
       {"total_value", total_value}, acc ->
         %__MODULE__{acc | total_value: total_value}
 
-      _, acc ->
+      _map_entry, acc ->
         acc
     end)
   end

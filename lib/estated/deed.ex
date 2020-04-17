@@ -41,7 +41,7 @@ defmodule Estated.Deed do
     :loan_type,
     :loan_due_date,
     :loan_finance_type,
-    :load_interest_rate
+    :loan_interest_rate
   ]
 
   @typedoc "Up to 20 years of sale and mortgage data which constitute a deed record."
@@ -89,7 +89,7 @@ defmodule Estated.Deed do
           loan_type: loan_type() | nil,
           loan_due_date: loan_due_date() | nil,
           loan_finance_type: loan_finance_type() | nil,
-          load_interest_rate: load_interest_rate() | nil
+          loan_interest_rate: loan_interest_rate() | nil
         }
 
   @typedoc """
@@ -402,7 +402,7 @@ defmodule Estated.Deed do
   Eg. **2.97**
   """
   @typedoc since: "0.1.0"
-  @type load_interest_rate :: float()
+  @type loan_interest_rate :: float()
 
   @doc false
   @doc since: "0.1.0"
@@ -417,127 +417,167 @@ defmodule Estated.Deed do
   end
 
   defp cast(%{} = deed) do
-    Enum.reduce(deed, %__MODULE__{}, fn
-      {"document_type", document_type}, acc ->
-        %__MODULE__{acc | document_type: document_type}
+    Enum.reduce(deed, %__MODULE__{}, &cast_field/2)
+  end
 
-      {"recording_date", recording_date}, acc ->
-        %__MODULE__{acc | recording_date: cast_date(recording_date)}
+  defp cast_field({"document_type", document_type}, acc) do
+    %__MODULE__{acc | document_type: document_type}
+  end
 
-      {"original_contract_date", original_contract_date}, acc ->
-        %__MODULE__{acc | original_contract_date: cast_date(original_contract_date)}
+  defp cast_field({"recording_date", recording_date}, acc) do
+    %__MODULE__{acc | recording_date: cast_date(recording_date)}
+  end
 
-      {"deed_book", deed_book}, acc ->
-        %__MODULE__{acc | deed_book: deed_book}
+  defp cast_field({"original_contract_date", original_contract_date}, acc) do
+    %__MODULE__{acc | original_contract_date: cast_date(original_contract_date)}
+  end
 
-      {"deed_page", deed_page}, acc ->
-        %__MODULE__{acc | deed_page: deed_page}
+  defp cast_field({"deed_book", deed_book}, acc) do
+    %__MODULE__{acc | deed_book: deed_book}
+  end
 
-      {"document_id", document_id}, acc ->
-        %__MODULE__{acc | document_id: document_id}
+  defp cast_field({"deed_page", deed_page}, acc) do
+    %__MODULE__{acc | deed_page: deed_page}
+  end
 
-      {"sale_price", sale_price}, acc ->
-        %__MODULE__{acc | sale_price: sale_price}
+  defp cast_field({"document_id", document_id}, acc) do
+    %__MODULE__{acc | document_id: document_id}
+  end
 
-      {"sale_price_description", sale_price_description}, acc ->
-        %__MODULE__{acc | sale_price_description: sale_price_description}
+  defp cast_field({"sale_price", sale_price}, acc) do
+    %__MODULE__{acc | sale_price: sale_price}
+  end
 
-      {"transfer_tax", transfer_tax}, acc ->
-        %__MODULE__{acc | transfer_tax: transfer_tax}
+  defp cast_field({"sale_price_description", sale_price_description}, acc) do
+    %__MODULE__{acc | sale_price_description: sale_price_description}
+  end
 
-      {"distressed_sale", distressed_sale}, acc ->
-        %__MODULE__{acc | distressed_sale: distressed_sale}
+  defp cast_field({"transfer_tax", transfer_tax}, acc) do
+    %__MODULE__{acc | transfer_tax: transfer_tax}
+  end
 
-      {"real_estate_owned", real_estate_owned}, acc ->
-        %__MODULE__{acc | real_estate_owned: real_estate_owned}
+  defp cast_field({"distressed_sale", distressed_sale}, acc) do
+    %__MODULE__{acc | distressed_sale: distressed_sale}
+  end
 
-      {"seller_first_name", seller_first_name}, acc ->
-        %__MODULE__{acc | seller_first_name: seller_first_name}
+  defp cast_field({"real_estate_owned", real_estate_owned}, acc) do
+    %__MODULE__{acc | real_estate_owned: real_estate_owned}
+  end
 
-      {"seller_last_name", seller_last_name}, acc ->
-        %__MODULE__{acc | seller_last_name: seller_last_name}
+  defp cast_field({"seller_first_name", seller_first_name}, acc) do
+    %__MODULE__{acc | seller_first_name: seller_first_name}
+  end
 
-      {"seller2_first_name", seller2_first_name}, acc ->
-        %__MODULE__{acc | seller2_first_name: seller2_first_name}
+  defp cast_field({"seller_last_name", seller_last_name}, acc) do
+    %__MODULE__{acc | seller_last_name: seller_last_name}
+  end
 
-      {"seller2_last_name", seller2_last_name}, acc ->
-        %__MODULE__{acc | seller2_last_name: seller2_last_name}
+  defp cast_field({"seller2_first_name", seller2_first_name}, acc) do
+    %__MODULE__{acc | seller2_first_name: seller2_first_name}
+  end
 
-      {"seller_address", seller_address}, acc ->
-        %__MODULE__{acc | seller_address: seller_address}
+  defp cast_field({"seller2_last_name", seller2_last_name}, acc) do
+    %__MODULE__{acc | seller2_last_name: seller2_last_name}
+  end
 
-      {"seller_unit_number", seller_unit_number}, acc ->
-        %__MODULE__{acc | seller_unit_number: seller_unit_number}
+  defp cast_field({"seller_address", seller_address}, acc) do
+    %__MODULE__{acc | seller_address: seller_address}
+  end
 
-      {"seller_city", seller_city}, acc ->
-        %__MODULE__{acc | seller_city: seller_city}
+  defp cast_field({"seller_unit_number", seller_unit_number}, acc) do
+    %__MODULE__{acc | seller_unit_number: seller_unit_number}
+  end
 
-      {"seller_state", seller_state}, acc ->
-        %__MODULE__{acc | seller_state: seller_state}
+  defp cast_field({"seller_city", seller_city}, acc) do
+    %__MODULE__{acc | seller_city: seller_city}
+  end
 
-      {"seller_zip_code", seller_zip_code}, acc ->
-        %__MODULE__{acc | seller_zip_code: seller_zip_code}
+  defp cast_field({"seller_state", seller_state}, acc) do
+    %__MODULE__{acc | seller_state: seller_state}
+  end
 
-      {"seller_zip_plus_four_code", seller_zip_plus_four_code}, acc ->
-        %__MODULE__{acc | seller_zip_plus_four_code: seller_zip_plus_four_code}
+  defp cast_field({"seller_zip_code", seller_zip_code}, acc) do
+    %__MODULE__{acc | seller_zip_code: seller_zip_code}
+  end
 
-      {"buyer_first_name", buyer_first_name}, acc ->
-        %__MODULE__{acc | buyer_first_name: buyer_first_name}
+  defp cast_field({"seller_zip_plus_four_code", seller_zip_plus_four_code}, acc) do
+    %__MODULE__{acc | seller_zip_plus_four_code: seller_zip_plus_four_code}
+  end
 
-      {"buyer_last_name", buyer_last_name}, acc ->
-        %__MODULE__{acc | buyer_last_name: buyer_last_name}
+  defp cast_field({"buyer_first_name", buyer_first_name}, acc) do
+    %__MODULE__{acc | buyer_first_name: buyer_first_name}
+  end
 
-      {"buyer2_first_name", buyer2_first_name}, acc ->
-        %__MODULE__{acc | buyer2_first_name: buyer2_first_name}
+  defp cast_field({"buyer_last_name", buyer_last_name}, acc) do
+    %__MODULE__{acc | buyer_last_name: buyer_last_name}
+  end
 
-      {"buyer2_last_name", buyer2_last_name}, acc ->
-        %__MODULE__{acc | buyer2_last_name: buyer2_last_name}
+  defp cast_field({"buyer2_first_name", buyer2_first_name}, acc) do
+    %__MODULE__{acc | buyer2_first_name: buyer2_first_name}
+  end
 
-      {"buyer_address", buyer_address}, acc ->
-        %__MODULE__{acc | buyer_address: buyer_address}
+  defp cast_field({"buyer2_last_name", buyer2_last_name}, acc) do
+    %__MODULE__{acc | buyer2_last_name: buyer2_last_name}
+  end
 
-      {"buyer_unit_type", buyer_unit_type}, acc ->
-        %__MODULE__{acc | buyer_unit_type: buyer_unit_type}
+  defp cast_field({"buyer_address", buyer_address}, acc) do
+    %__MODULE__{acc | buyer_address: buyer_address}
+  end
 
-      {"buyer_unit_number", buyer_unit_number}, acc ->
-        %__MODULE__{acc | buyer_unit_number: buyer_unit_number}
+  defp cast_field({"buyer_unit_type", buyer_unit_type}, acc) do
+    %__MODULE__{acc | buyer_unit_type: buyer_unit_type}
+  end
 
-      {"buyer_city", buyer_city}, acc ->
-        %__MODULE__{acc | buyer_city: buyer_city}
+  defp cast_field({"buyer_unit_number", buyer_unit_number}, acc) do
+    %__MODULE__{acc | buyer_unit_number: buyer_unit_number}
+  end
 
-      {"buyer_state", buyer_state}, acc ->
-        %__MODULE__{acc | buyer_state: buyer_state}
+  defp cast_field({"buyer_city", buyer_city}, acc) do
+    %__MODULE__{acc | buyer_city: buyer_city}
+  end
 
-      {"buyer_zip_code", buyer_zip_code}, acc ->
-        %__MODULE__{acc | buyer_zip_code: buyer_zip_code}
+  defp cast_field({"buyer_state", buyer_state}, acc) do
+    %__MODULE__{acc | buyer_state: buyer_state}
+  end
 
-      {"buyer_zip_plus_four_code", buyer_zip_plus_four_code}, acc ->
-        %__MODULE__{acc | buyer_zip_plus_four_code: buyer_zip_plus_four_code}
+  defp cast_field({"buyer_zip_code", buyer_zip_code}, acc) do
+    %__MODULE__{acc | buyer_zip_code: buyer_zip_code}
+  end
 
-      {"lender_name", lender_name}, acc ->
-        %__MODULE__{acc | lender_name: lender_name}
+  defp cast_field({"buyer_zip_plus_four_code", buyer_zip_plus_four_code}, acc) do
+    %__MODULE__{acc | buyer_zip_plus_four_code: buyer_zip_plus_four_code}
+  end
 
-      {"lender_type", lender_type}, acc ->
-        %__MODULE__{acc | lender_type: lender_type}
+  defp cast_field({"lender_name", lender_name}, acc) do
+    %__MODULE__{acc | lender_name: lender_name}
+  end
 
-      {"loan_amount", loan_amount}, acc ->
-        %__MODULE__{acc | loan_amount: loan_amount}
+  defp cast_field({"lender_type", lender_type}, acc) do
+    %__MODULE__{acc | lender_type: lender_type}
+  end
 
-      {"loan_type", loan_type}, acc ->
-        %__MODULE__{acc | loan_type: loan_type}
+  defp cast_field({"loan_amount", loan_amount}, acc) do
+    %__MODULE__{acc | loan_amount: loan_amount}
+  end
 
-      {"loan_due_date", loan_due_date}, acc ->
-        %__MODULE__{acc | loan_due_date: cast_date(loan_due_date)}
+  defp cast_field({"loan_type", loan_type}, acc) do
+    %__MODULE__{acc | loan_type: loan_type}
+  end
 
-      {"loan_finance_type", loan_finance_type}, acc ->
-        %__MODULE__{acc | loan_finance_type: loan_finance_type}
+  defp cast_field({"loan_due_date", loan_due_date}, acc) do
+    %__MODULE__{acc | loan_due_date: cast_date(loan_due_date)}
+  end
 
-      {"load_interest_rate", load_interest_rate}, acc ->
-        %__MODULE__{acc | load_interest_rate: load_interest_rate}
+  defp cast_field({"loan_finance_type", loan_finance_type}, acc) do
+    %__MODULE__{acc | loan_finance_type: loan_finance_type}
+  end
 
-      _, acc ->
-        acc
-    end)
+  defp cast_field({"loan_interest_rate", loan_interest_rate}, acc) do
+    %__MODULE__{acc | loan_interest_rate: loan_interest_rate}
+  end
+
+  defp cast_field(_map_entry, acc) do
+    acc
   end
 
   defp cast_date(date_string) when is_binary(date_string) do

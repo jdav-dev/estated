@@ -108,41 +108,51 @@ defmodule Estated.Owner do
   @doc since: "0.1.0"
   @spec cast(map()) :: t()
   def cast(%{} = owner) do
-    Enum.reduce(owner, %__MODULE__{}, fn
-      {"name", name}, acc ->
-        %__MODULE__{acc | name: name}
-
-      {"formatted_street_address", formatted_street_address}, acc ->
-        %__MODULE__{acc | formatted_street_address: formatted_street_address}
-
-      {"unit_type", unit_type}, acc ->
-        %__MODULE__{acc | unit_type: unit_type}
-
-      {"unit_number", unit_number}, acc ->
-        %__MODULE__{acc | unit_number: unit_number}
-
-      {"city", city}, acc ->
-        %__MODULE__{acc | city: city}
-
-      {"state", state}, acc ->
-        %__MODULE__{acc | state: state}
-
-      {"zip_code", zip_code}, acc ->
-        %__MODULE__{acc | zip_code: zip_code}
-
-      {"zip_plus_four_code", zip_plus_four_code}, acc ->
-        %__MODULE__{acc | zip_plus_four_code: zip_plus_four_code}
-
-      {"owner_occupied", owner_occupied}, acc ->
-        %__MODULE__{acc | owner_occupied: owner_occupied}
-
-      _, acc ->
-        acc
-    end)
+    Enum.reduce(owner, %__MODULE__{}, &cast_field/2)
   end
 
   @spec cast(nil) :: nil
   def cast(nil) do
     nil
+  end
+
+  defp cast_field({"name", name}, acc) do
+    %__MODULE__{acc | name: name}
+  end
+
+  defp cast_field({"formatted_street_address", formatted_street_address}, acc) do
+    %__MODULE__{acc | formatted_street_address: formatted_street_address}
+  end
+
+  defp cast_field({"unit_type", unit_type}, acc) do
+    %__MODULE__{acc | unit_type: unit_type}
+  end
+
+  defp cast_field({"unit_number", unit_number}, acc) do
+    %__MODULE__{acc | unit_number: unit_number}
+  end
+
+  defp cast_field({"city", city}, acc) do
+    %__MODULE__{acc | city: city}
+  end
+
+  defp cast_field({"state", state}, acc) do
+    %__MODULE__{acc | state: state}
+  end
+
+  defp cast_field({"zip_code", zip_code}, acc) do
+    %__MODULE__{acc | zip_code: zip_code}
+  end
+
+  defp cast_field({"zip_plus_four_code", zip_plus_four_code}, acc) do
+    %__MODULE__{acc | zip_plus_four_code: zip_plus_four_code}
+  end
+
+  defp cast_field({"owner_occupied", owner_occupied}, acc) do
+    %__MODULE__{acc | owner_occupied: owner_occupied}
+  end
+
+  defp cast_field(_map_entry, acc) do
+    acc
   end
 end

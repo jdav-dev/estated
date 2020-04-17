@@ -350,119 +350,155 @@ defmodule Estated.Structure do
   @doc since: "0.1.0"
   @spec cast(map()) :: t()
   def cast(%{} = structure) do
-    Enum.reduce(structure, %__MODULE__{}, fn
-      {"year_built", year_built}, acc ->
-        %__MODULE__{acc | year_built: year_built}
-
-      {"effective_year_built", effective_year_built}, acc ->
-        %__MODULE__{acc | effective_year_built: effective_year_built}
-
-      {"stories", stories}, acc ->
-        %__MODULE__{acc | stories: stories}
-
-      {"rooms_count", rooms_count}, acc ->
-        %__MODULE__{acc | rooms_count: rooms_count}
-
-      {"beds_count", beds_count}, acc ->
-        %__MODULE__{acc | beds_count: beds_count}
-
-      {"baths", baths}, acc ->
-        %__MODULE__{acc | baths: baths}
-
-      {"partial_baths_count", partial_baths_count}, acc ->
-        %__MODULE__{acc | partial_baths_count: partial_baths_count}
-
-      {"units_count", units_count}, acc ->
-        %__MODULE__{acc | units_count: units_count}
-
-      {"parking_type", parking_type}, acc ->
-        %__MODULE__{acc | parking_type: parking_type}
-
-      {"parking_spaces_count", parking_spaces_count}, acc ->
-        %__MODULE__{acc | parking_spaces_count: parking_spaces_count}
-
-      {"pool_type", pool_type}, acc ->
-        %__MODULE__{acc | pool_type: pool_type}
-
-      {"architecture_type", architecture_type}, acc ->
-        %__MODULE__{acc | architecture_type: architecture_type}
-
-      {"construction_type", construction_type}, acc ->
-        %__MODULE__{acc | construction_type: construction_type}
-
-      {"exterior_wall_type", exterior_wall_type}, acc ->
-        %__MODULE__{acc | exterior_wall_type: exterior_wall_type}
-
-      {"foundation_type", foundation_type}, acc ->
-        %__MODULE__{acc | foundation_type: foundation_type}
-
-      {"roof_material_type", roof_material_type}, acc ->
-        %__MODULE__{acc | roof_material_type: roof_material_type}
-
-      {"roof_style_type", roof_style_type}, acc ->
-        %__MODULE__{acc | roof_style_type: roof_style_type}
-
-      {"heating_type", heating_type}, acc ->
-        %__MODULE__{acc | heating_type: heating_type}
-
-      {"heating_fuel_type", heating_fuel_type}, acc ->
-        %__MODULE__{acc | heating_fuel_type: heating_fuel_type}
-
-      {"air_conditioning_type", air_conditioning_type}, acc ->
-        %__MODULE__{acc | air_conditioning_type: air_conditioning_type}
-
-      {"fireplaces", fireplaces}, acc ->
-        %__MODULE__{acc | fireplaces: fireplaces}
-
-      {"basement_type", basement_type}, acc ->
-        %__MODULE__{acc | basement_type: basement_type}
-
-      {"quality", quality}, acc ->
-        %__MODULE__{acc | quality: quality}
-
-      {"condition", condition}, acc ->
-        %__MODULE__{acc | condition: condition}
-
-      {"flooring_types", flooring_types}, acc ->
-        %__MODULE__{acc | flooring_types: flooring_types}
-
-      {"plumbing_fixtures_count", plumbing_fixtures_count}, acc ->
-        %__MODULE__{acc | plumbing_fixtures_count: plumbing_fixtures_count}
-
-      {"interior_wall_type", interior_wall_type}, acc ->
-        %__MODULE__{acc | interior_wall_type: interior_wall_type}
-
-      {"water_type", water_type}, acc ->
-        %__MODULE__{acc | water_type: water_type}
-
-      {"sewer_type", sewer_type}, acc ->
-        %__MODULE__{acc | sewer_type: sewer_type}
-
-      {"total_area_sq_ft", total_area_sq_ft}, acc ->
-        %__MODULE__{acc | total_area_sq_ft: total_area_sq_ft}
-
-      {"other_areas", other_areas}, acc ->
-        %__MODULE__{acc | other_areas: OtherArea.cast_list(other_areas)}
-
-      {"other_features", other_features}, acc ->
-        %__MODULE__{acc | other_features: OtherFeature.cast_list(other_features)}
-
-      {"other_improvements", other_improvements}, acc ->
-        %__MODULE__{acc | other_improvements: OtherImprovement.cast_list(other_improvements)}
-
-      {"other_rooms", other_rooms}, acc ->
-        %__MODULE__{acc | other_rooms: other_rooms}
-
-      {"amenities", amenities}, acc ->
-        %__MODULE__{acc | amenities: amenities}
-
-      _, acc ->
-        acc
-    end)
+    Enum.reduce(structure, %__MODULE__{}, &cast_field/2)
   end
 
   @spec cast(nil) :: nil
   def cast(nil) do
     nil
+  end
+
+  defp cast_field({"year_built", year_built}, acc) do
+    %__MODULE__{acc | year_built: year_built}
+  end
+
+  defp cast_field({"effective_year_built", effective_year_built}, acc) do
+    %__MODULE__{acc | effective_year_built: effective_year_built}
+  end
+
+  defp cast_field({"stories", stories}, acc) do
+    %__MODULE__{acc | stories: stories}
+  end
+
+  defp cast_field({"rooms_count", rooms_count}, acc) do
+    %__MODULE__{acc | rooms_count: rooms_count}
+  end
+
+  defp cast_field({"beds_count", beds_count}, acc) do
+    %__MODULE__{acc | beds_count: beds_count}
+  end
+
+  defp cast_field({"baths", baths}, acc) do
+    %__MODULE__{acc | baths: baths}
+  end
+
+  defp cast_field({"partial_baths_count", partial_baths_count}, acc) do
+    %__MODULE__{acc | partial_baths_count: partial_baths_count}
+  end
+
+  defp cast_field({"units_count", units_count}, acc) do
+    %__MODULE__{acc | units_count: units_count}
+  end
+
+  defp cast_field({"parking_type", parking_type}, acc) do
+    %__MODULE__{acc | parking_type: parking_type}
+  end
+
+  defp cast_field({"parking_spaces_count", parking_spaces_count}, acc) do
+    %__MODULE__{acc | parking_spaces_count: parking_spaces_count}
+  end
+
+  defp cast_field({"pool_type", pool_type}, acc) do
+    %__MODULE__{acc | pool_type: pool_type}
+  end
+
+  defp cast_field({"architecture_type", architecture_type}, acc) do
+    %__MODULE__{acc | architecture_type: architecture_type}
+  end
+
+  defp cast_field({"construction_type", construction_type}, acc) do
+    %__MODULE__{acc | construction_type: construction_type}
+  end
+
+  defp cast_field({"exterior_wall_type", exterior_wall_type}, acc) do
+    %__MODULE__{acc | exterior_wall_type: exterior_wall_type}
+  end
+
+  defp cast_field({"foundation_type", foundation_type}, acc) do
+    %__MODULE__{acc | foundation_type: foundation_type}
+  end
+
+  defp cast_field({"roof_material_type", roof_material_type}, acc) do
+    %__MODULE__{acc | roof_material_type: roof_material_type}
+  end
+
+  defp cast_field({"roof_style_type", roof_style_type}, acc) do
+    %__MODULE__{acc | roof_style_type: roof_style_type}
+  end
+
+  defp cast_field({"heating_type", heating_type}, acc) do
+    %__MODULE__{acc | heating_type: heating_type}
+  end
+
+  defp cast_field({"heating_fuel_type", heating_fuel_type}, acc) do
+    %__MODULE__{acc | heating_fuel_type: heating_fuel_type}
+  end
+
+  defp cast_field({"air_conditioning_type", air_conditioning_type}, acc) do
+    %__MODULE__{acc | air_conditioning_type: air_conditioning_type}
+  end
+
+  defp cast_field({"fireplaces", fireplaces}, acc) do
+    %__MODULE__{acc | fireplaces: fireplaces}
+  end
+
+  defp cast_field({"basement_type", basement_type}, acc) do
+    %__MODULE__{acc | basement_type: basement_type}
+  end
+
+  defp cast_field({"quality", quality}, acc) do
+    %__MODULE__{acc | quality: quality}
+  end
+
+  defp cast_field({"condition", condition}, acc) do
+    %__MODULE__{acc | condition: condition}
+  end
+
+  defp cast_field({"flooring_types", flooring_types}, acc) do
+    %__MODULE__{acc | flooring_types: flooring_types}
+  end
+
+  defp cast_field({"plumbing_fixtures_count", plumbing_fixtures_count}, acc) do
+    %__MODULE__{acc | plumbing_fixtures_count: plumbing_fixtures_count}
+  end
+
+  defp cast_field({"interior_wall_type", interior_wall_type}, acc) do
+    %__MODULE__{acc | interior_wall_type: interior_wall_type}
+  end
+
+  defp cast_field({"water_type", water_type}, acc) do
+    %__MODULE__{acc | water_type: water_type}
+  end
+
+  defp cast_field({"sewer_type", sewer_type}, acc) do
+    %__MODULE__{acc | sewer_type: sewer_type}
+  end
+
+  defp cast_field({"total_area_sq_ft", total_area_sq_ft}, acc) do
+    %__MODULE__{acc | total_area_sq_ft: total_area_sq_ft}
+  end
+
+  defp cast_field({"other_areas", other_areas}, acc) do
+    %__MODULE__{acc | other_areas: OtherArea.cast_list(other_areas)}
+  end
+
+  defp cast_field({"other_features", other_features}, acc) do
+    %__MODULE__{acc | other_features: OtherFeature.cast_list(other_features)}
+  end
+
+  defp cast_field({"other_improvements", other_improvements}, acc) do
+    %__MODULE__{acc | other_improvements: OtherImprovement.cast_list(other_improvements)}
+  end
+
+  defp cast_field({"other_rooms", other_rooms}, acc) do
+    %__MODULE__{acc | other_rooms: other_rooms}
+  end
+
+  defp cast_field({"amenities", amenities}, acc) do
+    %__MODULE__{acc | amenities: amenities}
+  end
+
+  defp cast_field(_map_entry, acc) do
+    acc
   end
 end

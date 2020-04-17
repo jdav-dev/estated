@@ -20,7 +20,7 @@ defmodule Estated.WarningMetadata do
       {"properties", properties}, acc ->
         %__MODULE__{acc | properties: WarningMetadataProperty.cast_list(properties)}
 
-      _, acc ->
+      _map_entry, acc ->
         acc
     end)
   end

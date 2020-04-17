@@ -246,83 +246,107 @@ defmodule Estated.Parcel do
   @doc since: "0.1.0"
   @spec cast(map()) :: t()
   def cast(%{} = parcel) do
-    Enum.reduce(parcel, %__MODULE__{}, fn
-      {"apn_original", apn_original}, acc ->
-        %__MODULE__{acc | apn_original: apn_original}
-
-      {"apn_unformatted", apn_unformatted}, acc ->
-        %__MODULE__{acc | apn_unformatted: apn_unformatted}
-
-      {"apn_previous", apn_previous}, acc ->
-        %__MODULE__{acc | apn_previous: apn_previous}
-
-      {"fips_code", fips_code}, acc ->
-        %__MODULE__{acc | fips_code: fips_code}
-
-      {"depth_ft", depth_ft}, acc ->
-        %__MODULE__{acc | depth_ft: depth_ft}
-
-      {"frontage_ft", frontage_ft}, acc ->
-        %__MODULE__{acc | frontage_ft: frontage_ft}
-
-      {"area_sq_ft", area_sq_ft}, acc ->
-        %__MODULE__{acc | area_sq_ft: area_sq_ft}
-
-      {"area_acres", area_acres}, acc ->
-        %__MODULE__{acc | area_acres: area_acres}
-
-      {"county_name", county_name}, acc ->
-        %__MODULE__{acc | county_name: county_name}
-
-      {"county_land_use_code", county_land_use_code}, acc ->
-        %__MODULE__{acc | county_land_use_code: county_land_use_code}
-
-      {"county_land_use_description", county_land_use_description}, acc ->
-        %__MODULE__{acc | county_land_use_description: county_land_use_description}
-
-      {"standardized_land_use_category", standardized_land_use_category}, acc ->
-        %__MODULE__{acc | standardized_land_use_category: standardized_land_use_category}
-
-      {"standardized_land_use_type", standardized_land_use_type}, acc ->
-        %__MODULE__{acc | standardized_land_use_type: standardized_land_use_type}
-
-      {"location_descriptions", location_descriptions}, acc ->
-        %__MODULE__{acc | location_descriptions: location_descriptions}
-
-      {"zoning", zoning}, acc ->
-        %__MODULE__{acc | zoning: zoning}
-
-      {"building_count", building_count}, acc ->
-        %__MODULE__{acc | building_count: building_count}
-
-      {"tax_account_number", tax_account_number}, acc ->
-        %__MODULE__{acc | tax_account_number: tax_account_number}
-
-      {"legal_description", legal_description}, acc ->
-        %__MODULE__{acc | legal_description: legal_description}
-
-      {"lot_code", lot_code}, acc ->
-        %__MODULE__{acc | lot_code: lot_code}
-
-      {"lot_number", lot_number}, acc ->
-        %__MODULE__{acc | lot_number: lot_number}
-
-      {"subdivision", subdivision}, acc ->
-        %__MODULE__{acc | subdivision: subdivision}
-
-      {"municipality", municipality}, acc ->
-        %__MODULE__{acc | municipality: municipality}
-
-      {"section_township_range", section_township_range}, acc ->
-        %__MODULE__{acc | section_township_range: section_township_range}
-
-      _, acc ->
-        acc
-    end)
+    Enum.reduce(parcel, %__MODULE__{}, &cast_field/2)
   end
 
   @spec cast(nil) :: nil
   def cast(nil) do
     nil
+  end
+
+  defp cast_field({"apn_original", apn_original}, acc) do
+    %__MODULE__{acc | apn_original: apn_original}
+  end
+
+  defp cast_field({"apn_unformatted", apn_unformatted}, acc) do
+    %__MODULE__{acc | apn_unformatted: apn_unformatted}
+  end
+
+  defp cast_field({"apn_previous", apn_previous}, acc) do
+    %__MODULE__{acc | apn_previous: apn_previous}
+  end
+
+  defp cast_field({"fips_code", fips_code}, acc) do
+    %__MODULE__{acc | fips_code: fips_code}
+  end
+
+  defp cast_field({"depth_ft", depth_ft}, acc) do
+    %__MODULE__{acc | depth_ft: depth_ft}
+  end
+
+  defp cast_field({"frontage_ft", frontage_ft}, acc) do
+    %__MODULE__{acc | frontage_ft: frontage_ft}
+  end
+
+  defp cast_field({"area_sq_ft", area_sq_ft}, acc) do
+    %__MODULE__{acc | area_sq_ft: area_sq_ft}
+  end
+
+  defp cast_field({"area_acres", area_acres}, acc) do
+    %__MODULE__{acc | area_acres: area_acres}
+  end
+
+  defp cast_field({"county_name", county_name}, acc) do
+    %__MODULE__{acc | county_name: county_name}
+  end
+
+  defp cast_field({"county_land_use_code", county_land_use_code}, acc) do
+    %__MODULE__{acc | county_land_use_code: county_land_use_code}
+  end
+
+  defp cast_field({"county_land_use_description", county_land_use_description}, acc) do
+    %__MODULE__{acc | county_land_use_description: county_land_use_description}
+  end
+
+  defp cast_field({"standardized_land_use_category", standardized_land_use_category}, acc) do
+    %__MODULE__{acc | standardized_land_use_category: standardized_land_use_category}
+  end
+
+  defp cast_field({"standardized_land_use_type", standardized_land_use_type}, acc) do
+    %__MODULE__{acc | standardized_land_use_type: standardized_land_use_type}
+  end
+
+  defp cast_field({"location_descriptions", location_descriptions}, acc) do
+    %__MODULE__{acc | location_descriptions: location_descriptions}
+  end
+
+  defp cast_field({"zoning", zoning}, acc) do
+    %__MODULE__{acc | zoning: zoning}
+  end
+
+  defp cast_field({"building_count", building_count}, acc) do
+    %__MODULE__{acc | building_count: building_count}
+  end
+
+  defp cast_field({"tax_account_number", tax_account_number}, acc) do
+    %__MODULE__{acc | tax_account_number: tax_account_number}
+  end
+
+  defp cast_field({"legal_description", legal_description}, acc) do
+    %__MODULE__{acc | legal_description: legal_description}
+  end
+
+  defp cast_field({"lot_code", lot_code}, acc) do
+    %__MODULE__{acc | lot_code: lot_code}
+  end
+
+  defp cast_field({"lot_number", lot_number}, acc) do
+    %__MODULE__{acc | lot_number: lot_number}
+  end
+
+  defp cast_field({"subdivision", subdivision}, acc) do
+    %__MODULE__{acc | subdivision: subdivision}
+  end
+
+  defp cast_field({"municipality", municipality}, acc) do
+    %__MODULE__{acc | municipality: municipality}
+  end
+
+  defp cast_field({"section_township_range", section_township_range}, acc) do
+    %__MODULE__{acc | section_township_range: section_township_range}
+  end
+
+  defp cast_field(_map_entry, acc) do
+    acc
   end
 end

@@ -64,18 +64,35 @@ defmodule Estated.Error do
   @doc since: "0.1.0"
   @spec cast(map()) :: t()
   def cast(%{} = error) do
-    Enum.reduce(error, %__MODULE__{}, fn
-      {"code", code}, acc -> %__MODULE__{acc | code: code}
-      {"status_code", status_code}, acc -> %__MODULE__{acc | status_code: status_code}
-      {"title", title}, acc -> %__MODULE__{acc | title: title}
-      {"description", description}, acc -> %__MODULE__{acc | description: description}
-      {"metadata", metadata}, acc -> %__MODULE__{acc | metadata: metadata}
-      _, acc -> acc
-    end)
+    Enum.reduce(error, %__MODULE__{}, &cast_field/2)
   end
 
   @spec cast(nil) :: nil
   def cast(nil) do
     nil
+  end
+
+  defp cast_field({"code", code}, acc) do
+    %__MODULE__{acc | code: code}
+  end
+
+  defp cast_field({"status_code", status_code}, acc) do
+    %__MODULE__{acc | status_code: status_code}
+  end
+
+  defp cast_field({"title", title}, acc) do
+    %__MODULE__{acc | title: title}
+  end
+
+  defp cast_field({"description", description}, acc) do
+    %__MODULE__{acc | description: description}
+  end
+
+  defp cast_field({"metadata", metadata}, acc) do
+    %__MODULE__{acc | metadata: metadata}
+  end
+
+  defp cast_field(_map_entry, acc) do
+    acc
   end
 end

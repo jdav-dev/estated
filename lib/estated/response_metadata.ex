@@ -25,7 +25,7 @@ defmodule Estated.ResponseMetadata do
       {"version", version}, acc ->
         %__MODULE__{acc | version: version}
 
-      _, acc ->
+      _map_entry, acc ->
         acc
     end)
   end

@@ -66,7 +66,7 @@ defmodule Estated.Warning do
       {"title", title}, acc -> %__MODULE__{acc | title: title}
       {"description", description}, acc -> %__MODULE__{acc | description: description}
       {"metadata", metadata}, acc -> %__MODULE__{acc | metadata: WarningMetadata.cast(metadata)}
-      _, acc -> acc
+      _map_entry, acc -> acc
     end)
   end
 end

@@ -48,7 +48,7 @@ defmodule Estated.OtherFeature do
     Enum.reduce(other_feature, %__MODULE__{}, fn
       {"type", type}, acc -> %__MODULE__{acc | type: type}
       {"sq_ft", sq_ft}, acc -> %__MODULE__{acc | sq_ft: sq_ft}
-      _, acc -> acc
+      _map_entry, acc -> acc
     end)
   end
 end

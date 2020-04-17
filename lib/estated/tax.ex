@@ -67,7 +67,7 @@ defmodule Estated.Tax do
       {"amount", amount}, acc -> %__MODULE__{acc | amount: amount}
       {"exemptions", exemptions}, acc -> %__MODULE__{acc | exemptions: exemptions}
       {"rate_code_area", rate_code_area}, acc -> %__MODULE__{acc | rate_code_area: rate_code_area}
-      _, acc -> acc
+      _map_entry, acc -> acc
     end)
   end
 end

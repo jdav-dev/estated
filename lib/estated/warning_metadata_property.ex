@@ -40,7 +40,7 @@ defmodule Estated.WarningMetadataProperty do
     Enum.reduce(warning_metadata_property, %__MODULE__{}, fn
       {"fips", fips}, acc -> %__MODULE__{acc | fips: fips}
       {"apn", apn}, acc -> %__MODULE__{acc | apn: apn}
-      _, acc -> acc
+      _map_entry, acc -> acc
     end)
   end
 end

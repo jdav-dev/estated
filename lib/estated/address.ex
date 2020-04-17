@@ -186,65 +186,83 @@ defmodule Estated.Address do
   @doc since: "0.1.0"
   @spec cast(map()) :: t()
   def cast(%{} = address) do
-    Enum.reduce(address, %__MODULE__{}, fn
-      {"street_number", street_number}, acc ->
-        %__MODULE__{acc | street_number: street_number}
-
-      {"street_pre_direction", street_pre_direction}, acc ->
-        %__MODULE__{acc | street_pre_direction: street_pre_direction}
-
-      {"street_name", street_name}, acc ->
-        %__MODULE__{acc | street_name: street_name}
-
-      {"street_suffix", street_suffix}, acc ->
-        %__MODULE__{acc | street_suffix: street_suffix}
-
-      {"street_post_direction", street_post_direction}, acc ->
-        %__MODULE__{acc | street_post_direction: street_post_direction}
-
-      {"unit_type", unit_type}, acc ->
-        %__MODULE__{acc | unit_type: unit_type}
-
-      {"unit_number", unit_number}, acc ->
-        %__MODULE__{acc | unit_number: unit_number}
-
-      {"formatted_street_address", formatted_street_address}, acc ->
-        %__MODULE__{acc | formatted_street_address: formatted_street_address}
-
-      {"city", city}, acc ->
-        %__MODULE__{acc | city: city}
-
-      {"state", state}, acc ->
-        %__MODULE__{acc | state: state}
-
-      {"zip_code", zip_code}, acc ->
-        %__MODULE__{acc | zip_code: zip_code}
-
-      {"zip_plus_four_code", zip_plus_four_code}, acc ->
-        %__MODULE__{acc | zip_plus_four_code: zip_plus_four_code}
-
-      {"carrier_code", carrier_code}, acc ->
-        %__MODULE__{acc | carrier_code: carrier_code}
-
-      {"latitude", latitude}, acc ->
-        %__MODULE__{acc | latitude: latitude}
-
-      {"longitude", longitude}, acc ->
-        %__MODULE__{acc | longitude: longitude}
-
-      {"geocoding_accuracy", geocoding_accuracy}, acc ->
-        %__MODULE__{acc | geocoding_accuracy: geocoding_accuracy}
-
-      {"census_tract", census_tract}, acc ->
-        %__MODULE__{acc | census_tract: census_tract}
-
-      _, acc ->
-        acc
-    end)
+    Enum.reduce(address, %__MODULE__{}, &cast_field/2)
   end
 
   @spec cast(nil) :: nil
   def cast(nil) do
     nil
+  end
+
+  defp cast_field({"street_number", street_number}, acc) do
+    %__MODULE__{acc | street_number: street_number}
+  end
+
+  defp cast_field({"street_pre_direction", street_pre_direction}, acc) do
+    %__MODULE__{acc | street_pre_direction: street_pre_direction}
+  end
+
+  defp cast_field({"street_name", street_name}, acc) do
+    %__MODULE__{acc | street_name: street_name}
+  end
+
+  defp cast_field({"street_suffix", street_suffix}, acc) do
+    %__MODULE__{acc | street_suffix: street_suffix}
+  end
+
+  defp cast_field({"street_post_direction", street_post_direction}, acc) do
+    %__MODULE__{acc | street_post_direction: street_post_direction}
+  end
+
+  defp cast_field({"unit_type", unit_type}, acc) do
+    %__MODULE__{acc | unit_type: unit_type}
+  end
+
+  defp cast_field({"unit_number", unit_number}, acc) do
+    %__MODULE__{acc | unit_number: unit_number}
+  end
+
+  defp cast_field({"formatted_street_address", formatted_street_address}, acc) do
+    %__MODULE__{acc | formatted_street_address: formatted_street_address}
+  end
+
+  defp cast_field({"city", city}, acc) do
+    %__MODULE__{acc | city: city}
+  end
+
+  defp cast_field({"state", state}, acc) do
+    %__MODULE__{acc | state: state}
+  end
+
+  defp cast_field({"zip_code", zip_code}, acc) do
+    %__MODULE__{acc | zip_code: zip_code}
+  end
+
+  defp cast_field({"zip_plus_four_code", zip_plus_four_code}, acc) do
+    %__MODULE__{acc | zip_plus_four_code: zip_plus_four_code}
+  end
+
+  defp cast_field({"carrier_code", carrier_code}, acc) do
+    %__MODULE__{acc | carrier_code: carrier_code}
+  end
+
+  defp cast_field({"latitude", latitude}, acc) do
+    %__MODULE__{acc | latitude: latitude}
+  end
+
+  defp cast_field({"longitude", longitude}, acc) do
+    %__MODULE__{acc | longitude: longitude}
+  end
+
+  defp cast_field({"geocoding_accuracy", geocoding_accuracy}, acc) do
+    %__MODULE__{acc | geocoding_accuracy: geocoding_accuracy}
+  end
+
+  defp cast_field({"census_tract", census_tract}, acc) do
+    %__MODULE__{acc | census_tract: census_tract}
+  end
+
+  defp cast_field(_map_entry, acc) do
+    acc
   end
 end

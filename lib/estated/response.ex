@@ -35,17 +35,31 @@ defmodule Estated.Response do
   @doc since: "0.1.0"
   @spec cast(map()) :: t()
   def cast(%{} = response) do
-    Enum.reduce(response, %__MODULE__{}, fn
-      {"data", data}, acc -> %__MODULE__{acc | data: Property.cast(data)}
-      {"error", error}, acc -> %__MODULE__{acc | error: Error.cast(error)}
-      {"metadata", metadata}, acc -> %__MODULE__{acc | metadata: ResponseMetadata.cast(metadata)}
-      {"warnings", warnings}, acc -> %__MODULE__{acc | warnings: Warning.cast_list(warnings)}
-      _, acc -> acc
-    end)
+    Enum.reduce(response, %__MODULE__{}, &cast_field/2)
   end
 
   @spec cast(nil) :: nil
   def cast(nil) do
     nil
+  end
+
+  defp cast_field({"data", data}, acc) do
+    %__MODULE__{acc | data: Property.cast(data)}
+  end
+
+  defp cast_field({"error", error}, acc) do
+    %__MODULE__{acc | error: Error.cast(error)}
+  end
+
+  defp cast_field({"metadata", metadata}, acc) do
+    %__MODULE__{acc | metadata: ResponseMetadata.cast(metadata)}
+  end
+
+  defp cast_field({"warnings", warnings}, acc) do
+    %__MODULE__{acc | warnings: Warning.cast_list(warnings)}
+  end
+
+  defp cast_field(_map_entry, acc) do
+    acc
   end
 end

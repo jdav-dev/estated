@@ -46,7 +46,7 @@ defmodule Estated.OtherArea do
     Enum.reduce(other_area, %__MODULE__{}, fn
       {"type", type}, acc -> %__MODULE__{acc | type: type}
       {"sq_ft", sq_ft}, acc -> %__MODULE__{acc | sq_ft: cast_integer(sq_ft)}
-      _, acc -> acc
+      _map_entry, acc -> acc
     end)
   end
 
