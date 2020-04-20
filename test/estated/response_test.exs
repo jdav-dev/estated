@@ -4,7 +4,7 @@ defmodule Estated.ResponseTest do
   alias Estated.Error
   alias Estated.Property
   alias Estated.Response
-  alias Estated.ResponseMetadata
+  alias Estated.Response.Metadata
   alias Estated.Warning
 
   doctest Response
@@ -23,7 +23,7 @@ defmodule Estated.ResponseTest do
       assert %Response{
                data: %Property{},
                error: %Error{},
-               metadata: %ResponseMetadata{},
+               metadata: %Metadata{},
                warnings: [%Warning{}]
              } == Response.cast(response)
     end

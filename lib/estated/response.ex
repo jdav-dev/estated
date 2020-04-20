@@ -14,7 +14,7 @@ defmodule Estated.Response do
 
   alias Estated.Error
   alias Estated.Property
-  alias Estated.ResponseMetadata
+  alias Estated.Response.Metadata
   alias Estated.Warning
 
   defstruct data: nil,
@@ -27,7 +27,7 @@ defmodule Estated.Response do
   @type t :: %__MODULE__{
           data: Property.t() | nil,
           error: Error.t() | nil,
-          metadata: ResponseMetadata.t() | nil,
+          metadata: Metadata.t() | nil,
           warnings: [Warning.t()]
         }
 
@@ -52,7 +52,7 @@ defmodule Estated.Response do
   end
 
   defp cast_field({"metadata", metadata}, acc) do
-    %__MODULE__{acc | metadata: ResponseMetadata.cast(metadata)}
+    %__MODULE__{acc | metadata: Metadata.cast(metadata)}
   end
 
   defp cast_field({"warnings", warnings}, acc) do

@@ -2,16 +2,16 @@ defmodule Estated.Property do
   @moduledoc "A property record."
   @moduledoc since: "0.1.0"
 
-  alias Estated.Address
-  alias Estated.Assessment
-  alias Estated.Deed
-  alias Estated.MarketAssessment
-  alias Estated.Owner
-  alias Estated.Parcel
-  alias Estated.PropertyMetadata
-  alias Estated.Structure
-  alias Estated.Tax
-  alias Estated.Valuation
+  alias Estated.Property.Address
+  alias Estated.Property.Assessment
+  alias Estated.Property.Deed
+  alias Estated.Property.MarketAssessment
+  alias Estated.Property.Metadata
+  alias Estated.Property.Owner
+  alias Estated.Property.Parcel
+  alias Estated.Property.Structure
+  alias Estated.Property.Tax
+  alias Estated.Property.Valuation
 
   defstruct [
     :metadata,
@@ -29,7 +29,7 @@ defmodule Estated.Property do
   @typedoc "A property record."
   @typedoc since: "0.1.0"
   @type t :: %__MODULE__{
-          metadata: PropertyMetadata.t() | nil,
+          metadata: Metadata.t() | nil,
           address: Address.t() | nil,
           parcel: Parcel.t() | nil,
           structure: Structure.t() | nil,
@@ -54,7 +54,7 @@ defmodule Estated.Property do
   end
 
   defp cast_field({"metadata", metadata}, acc) do
-    %__MODULE__{acc | metadata: PropertyMetadata.cast(metadata)}
+    %__MODULE__{acc | metadata: Metadata.cast(metadata)}
   end
 
   defp cast_field({"address", address}, acc) do

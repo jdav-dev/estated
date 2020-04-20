@@ -4,11 +4,11 @@ defmodule Estated do
   """
   @moduledoc since: "0.1.0"
 
-  alias Estated.CombinedPropertyRequest
-  alias Estated.FipsAndApnPropertyRequest
-  alias Estated.ParsedPropertyRequest
+  alias Estated.PropertyRequest.Combined
+  alias Estated.PropertyRequest.FipsAndApn
+  alias Estated.PropertyRequest.Parsed
+  alias Estated.PropertyRequest.Split
   alias Estated.Response
-  alias Estated.SplitPropertyRequest
 
   @property_uri URI.parse("https://apis.estated.com/v4/property")
   @sandbox_property_uri URI.parse("https://sandbox.estated.com/v4/property")
@@ -23,18 +23,9 @@ defmodule Estated do
   Choose the method based on what works best for your application.
   """
   @typedoc since: "0.1.0"
-  @type property_request ::
-          CombinedPropertyRequest.t()
-          | FipsAndApnPropertyRequest.t()
-          | ParsedPropertyRequest.t()
-          | SplitPropertyRequest.t()
+  @type property_request :: Combined.t() | FipsAndApn.t() | Parsed.t() | Split.t()
 
-  @property_request_structs [
-    CombinedPropertyRequest,
-    FipsAndApnPropertyRequest,
-    ParsedPropertyRequest,
-    SplitPropertyRequest
-  ]
+  @property_request_structs [Combined, FipsAndApn, Parsed, Split]
 
   @typedoc """
   Options for `get_property/3`.
@@ -64,7 +55,7 @@ defmodule Estated do
   Split property request
 
       iex> api_key = System.get_env("ESTATED_API_KEY")
-      iex> property_request = %SplitPropertyRequest{
+      iex> property_request = %Estated.PropertyRequest.Split{
       ...>   street_address: "1101 Sloan St",
       ...>   city: "Scranton",
       ...>   state: "PA",
@@ -76,7 +67,7 @@ defmodule Estated do
   Parsed property request
 
       iex> api_key = System.get_env("ESTATED_API_KEY")
-      iex> property_request = %ParsedPropertyRequest{
+      iex> property_request = %Estated.PropertyRequest.Parsed{
       ...>   street_number: "1101",
       ...>   street_name: "Sloan",
       ...>   street_suffix: "St",
@@ -90,7 +81,7 @@ defmodule Estated do
   Combined property request
 
       iex> api_key = System.get_env("ESTATED_API_KEY")
-      iex> property_request = %CombinedPropertyRequest{
+      iex> property_request = %Estated.PropertyRequest.Combined{
       ...>   combined_address: "1101 Sloan St, Scranton, PA 18504"
       ...> }
       iex> Estated.get_property(api_key, property_request, sandbox: true)
@@ -99,7 +90,7 @@ defmodule Estated do
   FIPS code and APN property request
 
       iex> api_key = System.get_env("ESTATED_API_KEY")
-      iex> property_request = %FipsAndApnPropertyRequest{
+      iex> property_request = %Estated.PropertyRequest.FipsAndApn{
       ...>   fips: "42069",
       ...>   apn: "15613060014"
       ...> }

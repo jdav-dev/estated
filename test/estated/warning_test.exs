@@ -2,7 +2,7 @@ defmodule Estated.WarningTest do
   use ExUnit.Case, async: true
 
   alias Estated.Warning
-  alias Estated.WarningMetadata
+  alias Estated.Warning.Metadata
 
   doctest Warning
 
@@ -24,7 +24,7 @@ defmodule Estated.WarningTest do
                  code: "PW01",
                  title: "Property Warning",
                  description: "No property was found for the given input",
-                 metadata: %WarningMetadata{}
+                 metadata: %Metadata{}
                }
              ] == Warning.cast_list(warnings)
     end

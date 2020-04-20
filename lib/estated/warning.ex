@@ -6,7 +6,7 @@ defmodule Estated.Warning do
   """
   @moduledoc since: "0.1.0"
 
-  alias Estated.WarningMetadata
+  alias Estated.Warning.Metadata
 
   defstruct [
     :code,
@@ -21,7 +21,7 @@ defmodule Estated.Warning do
           code: code() | nil,
           title: title() | nil,
           description: description() | nil,
-          metadata: WarningMetadata.t() | nil
+          metadata: Metadata.t() | nil
         }
 
   @typedoc """
@@ -77,7 +77,7 @@ defmodule Estated.Warning do
   end
 
   defp cast_field({"metadata", metadata}, acc) do
-    %__MODULE__{acc | metadata: WarningMetadata.cast(metadata)}
+    %__MODULE__{acc | metadata: Metadata.cast(metadata)}
   end
 
   defp cast_field(_map_entry, acc) do

@@ -1,7 +1,7 @@
 defmodule Estated.MixProject do
   use Mix.Project
 
-  @version "0.1.0"
+  @version "0.2.0"
 
   def project do
     [
@@ -41,35 +41,35 @@ defmodule Estated.MixProject do
       extras: ["README.md"],
       groups_for_modules: [
         Requests: [
-          Estated.CombinedPropertyRequest,
-          Estated.FipsAndApnPropertyRequest,
-          Estated.ParsedPropertyRequest,
-          Estated.SplitPropertyRequest
+          Estated.PropertyRequest.Combined,
+          Estated.PropertyRequest.FipsAndApn,
+          Estated.PropertyRequest.Parsed,
+          Estated.PropertyRequest.Split
         ],
         Response: [
           Estated.Response,
-          Estated.ResponseMetadata
+          Estated.Response.Metadata
         ],
         Property: [
           Estated.Property,
-          Estated.PropertyMetadata,
-          Estated.Address,
-          Estated.Parcel,
-          Estated.Structure,
-          Estated.Tax,
-          Estated.Assessment,
-          Estated.MarketAssessment,
-          Estated.Valuation,
-          Estated.OtherArea,
-          Estated.OtherFeature,
-          Estated.OtherImprovement,
-          Estated.Owner,
-          Estated.Deed
+          Estated.Property.Metadata,
+          Estated.Property.Address,
+          Estated.Property.Parcel,
+          Estated.Property.Structure,
+          Estated.Property.Tax,
+          Estated.Property.Assessment,
+          Estated.Property.MarketAssessment,
+          Estated.Property.Valuation,
+          Estated.Property.Structure.OtherArea,
+          Estated.Property.Structure.OtherFeature,
+          Estated.Property.Structure.OtherImprovement,
+          Estated.Property.Owner,
+          Estated.Property.Deed
         ],
         Warnings: [
           Estated.Warning,
-          Estated.WarningMetadata,
-          Estated.WarningMetadataProperty
+          Estated.Warning.Metadata,
+          Estated.Warning.Metadata.Property
         ],
         Errors: [
           Estated.Error

@@ -1,17 +1,17 @@
 defmodule Estated.PropertyTest do
   use ExUnit.Case, async: true
 
-  alias Estated.Address
-  alias Estated.Assessment
-  alias Estated.Deed
-  alias Estated.MarketAssessment
-  alias Estated.Owner
-  alias Estated.Parcel
   alias Estated.Property
-  alias Estated.PropertyMetadata
-  alias Estated.Structure
-  alias Estated.Tax
-  alias Estated.Valuation
+  alias Estated.Property.Address
+  alias Estated.Property.Assessment
+  alias Estated.Property.Deed
+  alias Estated.Property.MarketAssessment
+  alias Estated.Property.Metadata
+  alias Estated.Property.Owner
+  alias Estated.Property.Parcel
+  alias Estated.Property.Structure
+  alias Estated.Property.Tax
+  alias Estated.Property.Valuation
 
   doctest Property
 
@@ -33,7 +33,7 @@ defmodule Estated.PropertyTest do
       }
 
       assert %Property{
-               metadata: %PropertyMetadata{},
+               metadata: %Metadata{},
                address: %Address{},
                parcel: %Parcel{},
                structure: %Structure{},
